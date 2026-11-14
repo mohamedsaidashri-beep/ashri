@@ -3,130 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>إدارة الحسابات والمصاريف</title>
+  <title>تسجيل الدخول - إدارة الحسابات</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
     body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: #0f172a;
-      overflow: hidden;
-    }
-    #auth-screen {
-      position: fixed;
-      inset: 0;
+      margin: 0; padding: 0; width: 100%; height: 100%;
       background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 20px;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
     }
     .auth-box {
-      background: #ffffff;
-      width: 100%;
-      max-width: 380px;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-      text-align: center;
+      background: #ffffff; width: 100%; max-width: 380px; border-radius: 20px;
+      padding: 24px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); text-align: center;
     }
-    .auth-title {
-      font-size: 18px;
-      font-weight: 800;
-      color: #1e3a5f;
-      margin-bottom: 6px;
-    }
-    .auth-sub {
-      font-size: 12px;
-      color: #64748b;
-      margin-bottom: 20px;
-    }
+    .auth-title { font-size: 18px; font-weight: 800; color: #1e3a5f; margin-bottom: 6px; }
+    .auth-sub { font-size: 12px; color: #64748b; margin-bottom: 20px; }
     input[type="password"] {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 12px;
-      font-size: 15px;
-      text-align: center;
-      margin-bottom: 14px;
-      outline: none;
+      width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px;
+      font-size: 15px; text-align: center; margin-bottom: 14px; outline: none;
     }
-    input[type="password"]:focus {
-      border-color: #0ea5e9;
-    }
+    input[type="password"]:focus { border-color: #0ea5e9; }
     .auth-btn {
-      width: 100%;
-      padding: 12px;
-      background: #1e3a5f;
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
+      width: 100%; padding: 12px; background: #1e3a5f; color: #fff; border: none;
+      border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer;
     }
-    .auth-btn:active {
-      background: #0f172a;
-    }
-    .error-msg {
-      color: #ef4444;
-      font-size: 12px;
-      font-weight: 700;
-      margin-top: 10px;
-      display: none;
-    }
-    #app-frame {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: none;
-    }
+    .error-msg { color: #ef4444; font-size: 12px; font-weight: 700; margin-top: 10px; display: none; }
   </style>
 </head>
 <body>
-
-  <div id="auth-screen">
-    <div class="auth-box">
-      <div class="auth-title">🔒 تسجيل الدخول</div>
-      <div class="auth-sub">الرجاء إدخال كلمة المرور لعرض لوحة الحسابات</div>
-      <form onsubmit="checkPassword(event)">
-        <input type="password" id="pass-input" placeholder="كلمة المرور..." autofocus required>
-        <button type="submit" class="auth-btn">دخول</button>
-        <div class="error-msg" id="error-msg">كلمة المرور غير صحيحة!</div>
-      </form>
-    </div>
+  <div class="auth-box">
+    <div class="auth-title">🔒 تسجيل الدخول</div>
+    <div class="auth-sub">الرجاء إدخال كلمة المرور لفتح لوحة الحسابات</div>
+    <form onsubmit="checkPassword(event)">
+      <input type="password" id="pass-input" placeholder="كلمة المرور..." autofocus required>
+      <button type="submit" class="auth-btn">دخول</button>
+      <div class="error-msg" id="error-msg">كلمة المرور غير صحيحة!</div>
+    </form>
   </div>
-
-  <iframe id="app-frame" src="https://script.google.com/macros/s/AKfycbyv9JrUKfVTcgnPNIU-O888fNo1WYSzrX9kzobylcHAPfHRq9hfEZPeTdNxe8Wo73Zusw/exec"></iframe>
 
   <script>
     var CORRECT_PASSWORD = "Mm481996";
-
-    window.onload = function() {
-      if (sessionStorage.getItem("is_authenticated") === "true") {
-        showApp();
-      }
-    };
+    var APP_URL = "https://script.google.com/macros/s/AKfycbyv9JrUKfVTcgnPNIU-O888fNo1WYSzrX9kzobylcHAPfHRq9hfEZPeTdNxe8Wo73Zusw/exec";
 
     function checkPassword(e) {
       e.preventDefault();
       var inputVal = document.getElementById("pass-input").value;
       if (inputVal === CORRECT_PASSWORD) {
-        sessionStorage.setItem("is_authenticated", "true");
-        showApp();
+        window.location.replace(APP_URL);
       } else {
         document.getElementById("error-msg").style.display = "block";
         document.getElementById("pass-input").value = "";
       }
-    }
-
-    function showApp() {
-      document.getElementById("auth-screen").style.display = "none";
-      document.getElementById("app-frame").style.display = "block";
     }
   </script>
 </body>
